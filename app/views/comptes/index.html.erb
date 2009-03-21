@@ -1,0 +1,21 @@
+<% @comptes.each do |compte| %>
+	<table class="affich">
+		<tr>
+			<td rowspan="2" width="100">
+				<% if compte.avatar != nil && compte.avatar != "" %>
+					<%= image_tag "/photos/avatars/"+compte.id.to_s+"_thumb_"+compte.avatar %>
+				<% else %>
+					<%= image_tag "/images/no-pict.jpg" %>
+				<% end%>
+			</td>
+			<th>
+				<%= titre(link_to(compte.pseudo, :controller => :comptes, :action => :show, :id => compte.id),compte) %>
+			</td>
+		</tr>
+		<tr>
+			<td><%= compte.description %></td>
+		</tr>
+	</table>
+	<br>
+<% end %>
+<%= will_paginate @comptes %>

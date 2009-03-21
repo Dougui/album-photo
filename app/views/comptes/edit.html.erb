@@ -1,0 +1,54 @@
+<div id="erreurMsg"><%= flash[:message] %></div>
+
+<%= form_tag url_for(:action => :update, :id => @compte.id), :multipart => true, :method => :put %>
+	<%= hidden_field "compte", "id", :value => @compte.id %>
+	<table   class="affich">
+		<tr>
+			<td>Pseudo : </td>
+			<td><%= text_field "compte", "pseudo", :value => @compte.pseudo %></td>
+		</tr>
+		<% if error_message_on "compte", "pseudo", :value => @compte.pseudo %>
+			<tr>
+				<td colspan="2" class="tdErreur"><%= error_message_on "compte", "pseudo" %></td>
+			</tr>
+		<% end %>
+		<tr>
+			<td> Adresse E-Mail : </td>
+			<td><%= text_field "compte", "mail", :value => @compte.mail %></td>
+		</tr>
+		<% if error_message_on "compte", "mail", :value => @compte.mail %>
+			<tr>
+				<td colspan="2" class="tdErreur"><%= error_message_on "compte", "mail" %></td>
+			</tr>
+		<% end %>
+		<tr>
+			<td> Mot de passe : </td>
+			<td><%= password_field "compte", "mdp", :value => @compte.mdp %></td>
+		</tr>
+		<% if error_message_on "compte", "mdp", :value => @compte.mdp %>
+			<tr>
+				<td colspan="2" class="tdErreur"><%= error_message_on "compte", "mdp" %></td>
+			</tr>
+		<% end %>
+		<tr>
+			<td> Mot de passe (verification ) :</td>
+			<td><%= password_field_tag "mdp1", @compte.mdp, :size => 30 %></td>
+		</tr>
+		<tr>
+			<td colspan="2"> Description : </td>
+		</tr>
+		<tr>
+			<td colspan="2"><%= text_area "compte", "description", :value => @compte.description %></td>
+		</tr>
+		<tr>
+			<td>Avatar : </td>
+			<td><%= file_field "compte", "avatar" %></td>
+		</tr>
+		<tr>
+			<td colspan="2" align="right"> <%= submit_tag 'Valider' %></td>
+		</tr>
+	</table>
+</form>
+<script>
+	tinyMCE.execCommand('mceAddEditor', true, 'compte_description');
+</script>

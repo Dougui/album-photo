@@ -1,0 +1,24 @@
+<div id="comment_<%= commentaire.id.to_s %>" 
+	<% if blind == true %> 
+		style="display:none"
+	<% end %>
+>
+	<h3>
+		<%= commentaire.pseudo%>
+		<% if droits.to_s == "true" %>
+			<%= link_to_remote "Supprimer",
+			            {
+			                :url=>{:controller=>:commentaires, :action => "delete", :id => commentaire},
+			                :before => "Effect.BlindUp(document.getElementById('comment_"+commentaire.id.to_s+"'),{afterFinish: function() { document.getElementById('comment_"+commentaire.id.to_s+"').innerHTML = '';}});",
+			            },
+						:href=>(url_for :controller=>:commentaires, :action=> :delete, :id => @album)
+			%>
+		<% end %>
+	</h3>
+	<br/>
+	<%= commentaire.corps%>
+</div>
+<br/>
+<script>
+	//Effect.BlindDown("comment_<%= commentaire.id.to_s %>");
+</script>

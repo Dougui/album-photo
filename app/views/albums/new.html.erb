@@ -1,0 +1,31 @@
+<%= form_tag :action => :create%>
+	<table class="affich">
+		<tr>
+			<td>Titre : </td>
+			<td><%= text_field "album", "titre"%></td>
+		</tr>
+		<% if error_message_on "album", "titre", :value => @album.titre %>
+			<tr>
+				<td colspan="2" class="tdErreur"><%= error_message_on "album", "titre" %></td>
+			</tr>
+		<% end %>
+		<tr>
+			<td colSpan="2"><%= text_area "album", "description"%><td>
+		</tr>
+		<tr>
+			<td>Categorie : </td>
+			<td>
+				<%= collection_select "album" , "categorie_id", Categorie.find(:all), :id, :titre %>
+			</td>
+		</tr>
+		<tr>
+			<td>Album publique : </td><td><%= check_box "album" , "public"%></td>
+		</tr>
+		<tr>
+			<td colSpan="2"><%= submit_tag "Valider"%><td>
+		</tr>	
+	</table>
+</form>
+<script>
+	tinyMCE.execCommand('mceAddEditor', true, 'album_description');
+</script>

@@ -1,0 +1,26 @@
+<form name="formPhoto" id="formPhoto"></form>
+<%= image_tag "ajax-loader.gif", :id=>"wait_icon", :style=>"display:none;width=400; z-index:100" %>
+<form name="formPhoto" id="formPhoto">
+	<%= hidden_field_tag "idNew" %>
+	<%= hidden_field "photo", "id", :id => 'id', :value => @photoNew.id %>
+	<table>
+		<tr>
+			<td>Titre : </td>
+			<td><%= text_field "photo", "titre", :value => @photoNew.titre  %></td>
+		</tr>
+		<tr>
+			<td colspan="2"><%= text_area "photo", "description", :value => @photoNew.description  %><td>
+		</tr>
+	</table>
+	<%= observe_field 'idNew', 
+		:frequency => 2,
+		:on => 'change',
+		:url => {:controller => :photos, :action => :changePhoto},
+		:with => "Form.serialize('formPhoto')",
+		:before => "Element.toggle('wait_icon');document.formPhoto.photo_description.value = tinyMCE.get('photo_description').getContent()",
+		:success => "document.formPhoto.id.value = document.formPhoto.idNew.value;",
+		:complete => "tinyMCE.execCommand('mceAddEditor', true, 'photo_description');tinyMCE.get('photo_description').setProgressState(1);Element.toggle('wait_icon');",
+		:update =>  'divFormPhoto' 
+	%>
+</form>
+	

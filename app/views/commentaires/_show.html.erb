@@ -1,0 +1,33 @@
+<table class="affich" id="comment_<%= commentaire.id.to_s %>" 
+	<% if blind == true %> 
+		style="display:none"
+	<% end %>
+>
+	<tr>
+		<td rowspan="2" width="100">
+			<% if commentaire.compte %>
+				<%= image_tag "/photos/avatars/"+commentaire.compte_id.to_s+"_thumb_"+commentaire.compte.avatar %>
+			<% end %>
+		</td>
+		<th>
+			<% if commentaire.compte %>
+				<%= link_to commentaire.pseudo, {:controller => :comptes, :action => :show, :id => commentaire.compte_id.to_s} %>
+			<% else %>
+				<%= commentaire.pseudo %>
+			<% end %>
+			<% if droits.to_s == "true" %>
+				<%= link_to_remote "Supprimer",
+				            {
+				                :url=>{:controller=>:commentaires, :action => "delete", :id => commentaire},
+				                :before => "Effect.BlindUp(document.getElementById('comment_"+commentaire.id.to_s+"'),{afterFinish: function() { document.getElementById('comment_"+commentaire.id.to_s+"').innerHTML = '';}});",
+				            },
+							:href=>(url_for :controller=>:commentaires, :action=> :delete, :id => object)
+				%>
+			<% end %>
+		</th>
+	</tr>
+	<tr>
+		<td><%= commentaire.corps%></td>
+	</tr>
+</table>
+<br/>

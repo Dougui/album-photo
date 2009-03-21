@@ -1,0 +1,40 @@
+<h2>Ajouter un commentaire :</h2>
+
+
+<%= form_remote_tag(:url => {:controller=> :commentaires, :action => "create", :droits => droits }, :update =>  'commentaires', :position=> :bottom) %>
+  <%= hidden_field "commentaire", "objet_type", :value => type_objet %>
+  <%= hidden_field "commentaire", "objet_id", :value => params[:id]%>
+  <table class="affich">
+  	<tr>
+  		<td>Pseudo : </td>
+		<td>
+			<% if session[:compte]%>
+				<%= session[:compte][:pseudo] %>
+				<%= hidden_field "commentaire", "pseudo", :value => session[:compte][:pseudo] %>
+				<%= hidden_field "commentaire", "compte_id", :value => session[:compte][:id] %>
+			<% else %>
+				<%= text_field "commentaire", "pseudo" %>
+			<% end %>
+		</td>
+  	</tr>
+	<% if error_message_on "commentaire", "pseudo" %>
+		<tr>
+			<td colspan="2" class="tdErreur"><%= error_message_on "commentaire", "pseudo" %></td>
+		</tr>
+	<% end %>
+	<tr>
+		<td colspan="2"><%= text_area "commentaire", "corps" %></td>
+	</tr>
+	<% if error_message_on "commentaire", "corps" %>
+		<tr>
+			<td colspan="2" class="tdErreur"><%= error_message_on "commentaire", "corps" %></td>
+		</tr>
+	<% end %>
+	<tr>
+		<td colspan="2"><%= submit_tag "Valider", :onclick=>"tinyMCE.triggerSave();" %></td>
+	</tr>
+  </table>
+</form>
+<script>
+	tinyMCE.execCommand('mceAddEditor', true, 'commentaire_corps');
+</script>

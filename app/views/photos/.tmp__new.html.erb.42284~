@@ -1,0 +1,106 @@
+<script type='text/javascript'>
+  var swfu;
+
+  window.onload = function () {
+    swfu = new SWFUpload({
+      // Create the custom swfupload_photos_path in the routes.rb file
+      upload_url : '<%= swfupload_photos_path %>',
+
+      // flash_url : '/assets/swfupload_f9.swf',
+
+      file_size_limit : '3 MB',
+      file_types : '*.jpg',
+      file_types_description : 'JPG Images',
+      file_upload_limit : '0',
+
+      file_queue_error_handler : fileQueueError,
+      file_dialog_complete_handler : fileDialogComplete,
+      upload_progress_handler : uploadProgress,
+      upload_error_handler : uploadError,
+      upload_success_handler : uploadSuccess,
+      upload_complete_handler : uploadComplete,
+
+      custom_settings : { 
+        upload_target : 'divFileProgressContainer'
+      },
+
+		// Button Settings
+		button_image_url : "/images/spyglass.png",
+		button_placeholder_id : "spanButtonPlaceholder",
+		button_width: 180,
+		button_height: 18,
+		button_text : '<span class="button">Select Images <span class="buttonSmall">(3 MB Max)</span></span>',
+		button_text_style : '.button { font-family: Helvetica, Arial, sans-serif; font-size: 12pt; } .buttonSmall { font-size: 10pt; }',
+		button_text_top_padding: 0,
+		button_text_left_padding: 18,
+		button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
+		button_cursor: SWFUpload.CURSOR.HAND,
+	
+		// Flash Settings
+		flash_url : "/assets/swfupload.swf",
+	
+		custom_settings : {
+			upload_target : "divFileProgressContainer"
+		},
+
+      debug: false
+
+    });
+  };
+
+  function changePhoto(src){
+  	alert(document.getElementsByName("formPhoto")[0])
+	document.getElementsByName("formPhoto")[0].idNew.value = parseInt(src.split("/")[src.split("/").length-2],10);
+	if(document.getElementById("divFormPhoto").style.display == "none" ) {
+		document.getElementById("divFormPhoto").style.display = "block";
+	}
+	if (document.getElementsByName("formPhoto")[0].id.value != document.getElementsByName("formPhoto")[0].idNew.value) {
+		new Effect.Opacity("img" + document.getElementsByName("formPhoto")[0].idNew.value, {
+			from: 1.0,
+			to: 0.5,
+			duration: 0.5
+		});
+		if (document.getElementsByName("formPhoto")[0].id.value != "") {
+			new Effect.Opacity("img" + document.getElementsByName("formPhoto")[0].id.value, {
+				from: 0.5,
+				to: 1.0,
+				duration: 0.5
+			});
+		}
+	} 
+  }
+</script>
+<div style="margin: 0px 10px;">
+	<div>
+		<form>
+  		<div style="display: inline; border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 2px;">
+  			<span id="spanButtonPlaceholder"></span>
+  		</div>
+		</form>
+	</div>
+	<div id="divFileProgressContainer" style="height: 75px;"></div>
+	<div id="thumbnails"></div>
+</div>
+<div id="divFormPhoto" style="display:none;">
+	<form name="formPhoto" id="formPhoto">
+		<%= hidden_field_tag "idNew", "" %>
+		<%= hidden_field "photo", "id", :id => 'id', :value => ""%>
+		<table>
+			<tr>
+				<td>Titre : </td>
+				<td><%= text_field "photo", "titre", :value => ""%></td>
+			</tr>
+			<tr>
+				<td colspan="2"><%= text_field "photo", "description", :value => ""%><td>
+			</tr>
+		</table>
+	</form>
+	<%= observe_field 'idNew', 
+		:frequency => 2,
+		:on => 'change',
+		:url => {:controller => :photos, :action => :changePhoto},
+		:with => "Form.serialize('formPhoto')",
+		:success => "document.formPhoto.id.value = document.formPhoto.idNew.value",
+		:update =>  'divFormPhoto' 
+	%>
+</div>

@@ -1,0 +1,43 @@
+<%= form_tag :action => :update %>
+	<%= hidden_field "new", "id", :value => @new.id.to_s %>
+	<table class="affich">
+		<tr>
+			<td>Titre : </td>
+			<td><%= text_field "new", "titre", :value => @new.titre%></td>
+		</tr>
+		<% if error_message_on "new", "titre", :value => @new.titre %>
+			<tr>
+				<td colspan="2" class="tdErreur"><%= error_message_on "new", "titre" %></td>
+			</tr>
+		<% end %>
+		<tr>
+			<td colspan="2">Description : </td>
+		</tr>	
+		<tr>
+			<td colSpan=2><%= text_area "new", "description", :value => @new.description%><td>
+		</tr>
+		<% if error_message_on "new", "description", :value => @new.description %>
+			<tr>
+				<td colspan="2" class="tdErreur"><%= error_message_on "new", "description" %></td>
+			</tr>
+		<% end %>
+		<tr>
+			<td colspan="2">Corps : </td>
+		</tr>	
+		<tr>
+			<td colSpan=2><%= text_area "new", "corps", :value => @new.corps%><td>
+		</tr>
+		<% if error_message_on "new", "corps", :value => @new.corps %>
+			<tr>
+				<td colspan="2" class="tdErreur"><%= error_message_on "new", "corps" %></td>
+			</tr>
+		<% end %>
+		<tr>
+			<td colSpan=2><%= submit_tag "Valider"%><td>
+		</tr>	
+	</table>
+</form>
+<script>
+	tinyMCE.execCommand('mceAddEditor', true, 'new_description');
+	tinyMCE.execCommand('mceAddEditor', true, 'new_corps');
+</script>

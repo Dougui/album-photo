@@ -1,0 +1,18 @@
+<% @news.each do |new| %>
+	<table  class="affich">
+		<tr>
+			<th>
+				<%= titre(link_to(new.titre, {:action => :show, :id => new.id}),new)%>
+			</td>
+		</tr>
+		<tr>
+			<td><%= new.description %></td>
+		</tr>
+	</table>
+	<br>
+<% end %>
+<% if session[:compte] != nil && session[:compte].droits.to_i == 9 %>
+	<%= link_to 'Ajouter une actualitée', {:action => :new} %>
+<% end %>
+<br><br>
+<%= will_paginate @news %>

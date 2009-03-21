@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  titre: 
+  corps: MyText
+  etat: 1
+  compte_emetteur: 1
+  compte_recepteur: 1
+
+two:
+  titre: 
+  corps: MyText
+  etat: 1
+  compte_emetteur: 1
+  compte_recepteur: 1

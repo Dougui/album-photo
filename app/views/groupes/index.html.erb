@@ -1,0 +1,28 @@
+<h1>Listing groupes</h1>
+
+<table>
+  <tr>
+    <th>Titre</th>
+    <th>Description</th>
+    <th>Public</th>
+    <th>Avatar</th>
+    <th>Compte</th>
+  </tr>
+
+<% for groupe in @groupes %>
+  <tr>
+    <td><%=h groupe.titre %></td>
+    <td><%=h groupe.description %></td>
+    <td><%=h groupe.public %></td>
+    <td><%=h groupe.avatar %></td>
+    <td><%=h groupe.compte_id %></td>
+    <td><%= link_to 'Show', groupe %></td>
+    <td><%= link_to 'Edit', edit_groupe_path(groupe) %></td>
+    <td><%= link_to 'Destroy', groupe, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New groupe', new_groupe_path %>

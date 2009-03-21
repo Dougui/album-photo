@@ -1,0 +1,16 @@
+<% @categories.each do |categorie| %>
+	<table class="affich">
+		<tr>
+			<th>
+				<%= titre(categorie.titre,categorie) %>
+			</td>
+		</tr>
+		<tr>
+			<td><%= categorie.description %></td>
+		</tr>
+	</table>
+	<br>
+<% end %>
+<%= link_to 'Ajouter une categorie', {:action => :new} %>
+<br><br>
+<%= will_paginate @albums %>

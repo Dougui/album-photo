@@ -1,0 +1,31 @@
+<table>
+	<tr>
+		<td>
+			<%= @compte.pseudo %>
+			<% if session[:compte] != nil && session[:compte].droits.to_i == 9 && @compte.id != session[:compte].id %>
+			    <%= link_to 'Supprimer', {:action => :destroy, :id => compte.id}, :confirm => 'Etes vous sure?', :method => :delete %>
+			<% end %>
+		</td>
+	</tr>
+	<tr>
+		<td><%= @compte.description%></td>
+	</tr>
+</table>
+<% for album in @compte.albums %>
+	<table border="1" width="100%" class="affich">
+		<tr>
+			<td rowspan="2" width="120">	
+			</td>
+			<td>
+				<%= link_to album.titre, {:action => :show, :id => album.id} %>
+				<% if session[:compte] != nil && (session[:compte].droits.to_i == 9 || album.compte_id == session[:compte].id) %>
+				    <%= link_to 'Supprimer', {:action => :destroy, :id => album.id}, :confirm => 'Etes vous sure?', :method => :delete %>
+				<% end %>
+			</td>
+		</tr>
+		<tr>
+			<td><%= album.description %></td>
+		</tr>
+	</table>
+	<br>
+<% end %>

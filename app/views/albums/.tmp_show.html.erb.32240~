@@ -1,0 +1,54 @@
+<script>
+	function affichImage(src){
+		document.getElementById("divPhoto").innerHTML = "";
+		img = document.createElement("img");
+		img.src = src;
+		img.onclick = function(){
+			Effect.Puff("divPhoto");
+			document.getElementById("divPhoto").style.display = "none"
+			
+		}
+		document.getElementById("divPhoto").appendChild(img);
+		Effect.Grow('divPhoto');
+	}
+</script>
+<%= @album.description %>
+
+<table width="100%">
+	<% i = 0 %>
+	<% for photo in @album.photos %>
+		<% if i%5 == 0 %>
+			<tr>
+		<% end %>
+			<td>
+				<a href="<%= photo.public_filename %>" rel="lightbox[photos]" title="<%= photo.description %>">
+					<%= image_tag photo.public_filename(:thumb) %>
+				</a>
+			</td>
+		<% if i%5 == 4 %>
+			</tr>
+		<% end %>
+		<% i+=1%>
+	<% end %>
+</table>
+
+<h2>Commentaires</h2>
+<div id="commentaire">
+	<% commentaires = Commentaire.find(:all, :conditions => "objet_type = 'album' and objet_id = "+@album.id.to_s)%>
+	<% for i in 0..(commentaires.length-1)%>
+		<%= render(:partial => "commentaires/show", :locals => {:commentaire => commentaires[i]}) %>
+	<% end %>
+</div>
+
+<%= link_to_remote "Supprimer tout",
+            {
+                :url=>{:action=> :delete_all_comments, :id => @album},
+                :success => "Effect.BlindUp(document.getElementById('comments'),{afterFinish: function() { document.getElementById('comments').innerHTML = ''; document.getElementById('comments').style.display = 'block';}})" 
+			},
+			:href=>(url_for :action=> :delete_all_comments, :id => @album)
+%>
+<br/>
+<br/>
+<div id="formCommentaire">
+	<%= render(:partial => "commentaires/new", :locals => {:type_objet => "album"}) %>
+</div>

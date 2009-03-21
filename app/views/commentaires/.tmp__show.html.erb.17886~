@@ -1,0 +1,17 @@
+<% puts commentaire.to_xml %>
+<div id="comment_<%= commentaire.id.to_s %>" style="display:none">
+	<h3><%= commentaire.pseudo%>
+	<%= link_to_remote "Supprimer",
+	            {
+	                :url=>{:controller=>:commentaires, :action => "delete", :id => commentaire},
+	                :complete => "Effect.BlindUp(document.getElementById('comment_"+commentaire.id.to_s+"'));"
+	            },
+				:href=>(url_for :controller=>:commentaires, :action=> :delete, :id => @album)
+	%></h3>
+	<br/>
+	<%= commentaire.corps%>
+</div>
+<br/>
+<script>
+	Effect.BlindDown("comment_<%= commentaire.id.to_s %>");
+</script>

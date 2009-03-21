@@ -1,0 +1,22 @@
+<form name="formPhoto">
+	<!--%= text_field_to_remote "Faire grossir les items (age = 14)",
+            :url=>{:action=>"make_bigger"},
+            :before => "Element.show('wait_icon')",
+            :complete => "Element.hide('wait_icon')"
+	%-->
+	<%= text_field_tag("numImage", params["numImage"] , :size => 10 ) %>
+	<table>
+		<tr>
+			<td>Titre : </td>
+			<td><%= text_field "photo", "titre" %></td>
+		</tr>
+		<tr>
+			<td colspan="2"><%= text_area "photo", "description" %><td>
+		</tr>
+	</table>
+</form>
+<%= observe_field 'numImage',  
+		:frequency => 2,
+		:update =>  'comments',
+        :success => {:action => :changePhoto}
+%>

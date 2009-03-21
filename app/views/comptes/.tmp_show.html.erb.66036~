@@ -1,0 +1,53 @@
+<table border="1" width="100%" class="affich">
+	<tr>
+		<td rowspan="2" width="100">
+			<% if @compte.avatar != nil && @compte.avatar != "" %>
+				<%= image_tag "/photos/avatars/"+@compte.id.to_s+"_thumb_"+@compte.avatar %>
+			<% else %>
+				<%= image_tag "/images/no-pict.jpg" %>
+			<% end%>
+		</td>
+		<td>
+			<%= link_to @compte.pseudo, :controller => :comptes, :action => :show, :id => @compte.id %>
+			<% if session[:compte] != nil && session[:compte].droits.to_i == 9  && @compte.id != session[:compte].id %>
+			    <%= link_to 'Supprimer', {:action => :destroy, :id => @compte.id}, :confirm => 'Etes vous sure?', :method => :delete %>
+				<%= link_to('Editer', {:action => :edit, :id => @compte.id})%>
+			<% end %>
+		</td>
+	</tr>
+	<tr>
+		<td><%= @compte.description %></td>
+	</tr>
+</table>
+<br/><br/>
+<h2>Liste des Albums de <%= @compte.pseudo %> : </h1>
+<% for album in @compte.albums %>
+	<table border="1" width="100%" class="affich">
+		<tr>
+			<td rowspan="2" width="100">				
+				<% if album.photos.length != 0 %>
+					<img src="<%= album.photos[rand(album.photos.length)].public_filename(:thumb) %>"/>
+				<% else %>
+					<img src="/images/no-pict.jpg"/>
+				<% end %>
+			</td>
+			<td>
+				<%= link_to album.titre, {:controller => :albums, :action => :show, :id => album.id} %>
+				<% if session[:compte] != nil && (session[:compte].droits.to_i == 9 || album.compte_id == session[:compte].id) %>
+				    <%= link_to 'Supprimer', {:controller => :albums, :action => :destroy, :id => album.id}, :confirm => 'Etes vous sure?', :method => :delete %>
+				    <%= link_to 'Editer', {:controller => :albums, :action => :edit, :id => album.id} %>
+				<% end %>
+			</td>
+		</tr>
+		<tr>
+			<td><%= album.description %></td>
+		</tr>
+	</table>
+	<br>
+<% end %>
+<% if session[:compte] != nil && (session[:compte].droits.to_i == 9 || @compte.id == session[:compte].id) %>
+	<% droits = true %>
+<% else %>
+	<% droits = false %>
+<% end %>
+<%= render(:partial => "commentaires/commentaires", :locals => {:object => @compte, :droits => droits, :type => "compte"})%>

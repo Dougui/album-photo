@@ -1,0 +1,27 @@
+<div class="left-bloc">
+    <div class="left-titre"><h3>Menu</h3></div>
+    <ul>
+    	<li><%= link_to("Accueil", {:controller => :news,:action => :index})%></li>
+        <li><%= link_to("Liste des albums", {:controller => :albums,:action => :index})%></li>
+        <li><%= link_to("Liste des comptes", {:controller => :comptes,:action => :index})%></li>
+    </ul>
+</div>
+<% if session[:compte] %>
+	<div class="left-bloc">
+        <div class="left-titre"><h3>Mon compte</h3></div>
+        <ul>
+			<li><%= link_to "Modifier son compte", {:controller => :comptes, :action => :edit, :id => session[:compte].id} %></li>
+			<li><%= link_to "Voir les albums privés", {:controller => :albums,:action => :index, :compte_id => session[:compte].id, :type => "prives"} %></li>
+			<li><%= link_to "Voir ses albums", {:controller => :albums,:action => :index, :compte_id => session[:compte].id} %></li>
+			<li><%= link_to "Creer un album", {:controller => :albums,:action => :new, :compte_id => session[:compte].id} %></li>
+		</ul>
+    </div>
+<% end %>
+<% if session[:compte] && session[:compte][:droits] == 9.to_s %>
+	<div class="left-bloc">
+        <div class="left-titre"><h3>Admin</h3></div>
+        <ul>
+			<li><%= link_to "Categories", {:controller => :categories, :action => :index} %></li>
+		</ul>
+    </div>
+<% end %>

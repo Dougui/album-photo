@@ -1,0 +1,41 @@
+<% @albums.each do |album| %>
+	<table border="1" width="100%" class="affich">
+		<tr>
+			<td rowspan="2" width="100">	
+				<% if album.photos.length != 0 %>
+					<img src="<%= album.photos[rand(album.photos.length)].public_filename(:thumb) %>"/>
+				<% end %>
+			</td>
+			<td>
+				<%= link_to album.titre, {:action => :show, :id => album.id} %>
+				<% if session[:compte] != nil && (session[:compte].droits.to_i == 9 || album.compte_id == session[:compte].id) %>
+				    <%= link_to 'Supprimer', {:action => :destroy, :id => album.id}, :confirm => 'Etes vous sure?', :method => :delete %>
+				    <%= link_to 'Editer', {:action => :edit, :id => album.id} %>
+				<% end %>
+			</td>
+		</tr>
+		<tr>
+			<td><%= album.description %></td>
+		</tr>
+	</table>
+	<br>
+<% end %>
+<%= link_to 'Ajouter un album', {:action => :new} %>
+<br><br>
+<% 
+if params[:numPage] == nil
+	numPage = 1
+else
+	numPage = params[:numPage].to_i
+end
+i = 1
+nbPages = (Album.find(:all).length / 5.00).ceil
+while i <=  nbPages
+	if i == numPage %>
+		<%= i %>
+<%	else %>
+		<%= (link_to i, url_for(:action => :index, :numPage => i)) %>
+<%	end
+	i+=1
+end
+%>

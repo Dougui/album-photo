@@ -1,0 +1,22 @@
+<%= form_tag url_for(:action => :create) %>
+
+	<table class="affich">
+		<tr>
+			<td>Titre</td><td><%= text_field "categorie", "titre" %></td>
+		</tr>
+		<% if error_message_on "categorie", "titre" %>
+			<tr>
+				<td colspan="2" class="tdErreur"><%= error_message_on "categorie", "titre" %></td>
+			</tr>
+		<% end %>
+		<tr>
+			<td colspan="2"><%= text_area "categorie", "description" %></td>
+		</tr>
+		<tr>
+			<td colspan="2"><%= submit_tag "Valider" %></td>
+		</tr>
+	</table>
+</form>
+<script>
+	tinyMCE.execCommand('mceAddEditor', true, 'categorie_description');
+</script>

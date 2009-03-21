@@ -1,0 +1,155 @@
+<script type='text/javascript'>
+  var swfu;
+
+  window.onload = function () {
+    swfu = new SWFUpload({
+      // Create the custom swfupload_photos_path in the routes.rb file
+      upload_url : '<%= url_for(:controller => :photos, :action => :swfupload, :id => @album.id) %>',
+
+      // flash_url : '/assets/swfupload_f9.swf',
+
+      file_size_limit : '3 MB',
+      //file_types : '*.jpg',
+      //file_types_description : 'JPG Images',
+      file_upload_limit : '0',
+
+      file_queue_error_handler : fileQueueError,
+      file_dialog_complete_handler : fileDialogComplete,
+      upload_progress_handler : uploadProgress,
+      upload_error_handler : uploadError,
+      upload_success_handler : uploadSuccess,
+      upload_complete_handler : uploadComplete,
+
+      custom_settings : { 
+        upload_target : 'divFileProgressContainer'
+      },
+
+		// Button Settings
+		button_image_url : "/images/spyglass.png",
+		button_placeholder_id : "spanButtonPlaceholder",
+		button_width: 180,
+		button_height: 18,
+		button_text : '<span class="button">Select Images <span class="buttonSmall">(3 MB Max)</span></span>',
+		button_text_style : '.button { font-family: Helvetica, Arial, sans-serif; font-size: 12pt; } .buttonSmall { font-size: 10pt; }',
+		button_text_top_padding: 0,
+		button_text_left_padding: 18,
+		button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
+		button_cursor: SWFUpload.CURSOR.HAND,
+	
+		// Flash Settings
+		flash_url : "/assets/swfupload.swf",
+	
+		custom_settings : {
+			upload_target : "divFileProgressContainer"
+		},
+
+      debug: false
+
+    });
+	tinyMCE.execCommand('mceAddEditor', true, 'photo_description');
+  };
+
+  function changePhoto(src){
+	document.getElementsByName("formPhoto")[0].idNew.value = parseInt(src.split("/")[src.split("/").length-2],10);
+	if(document.getElementById("divFormPhoto").style.display == "none" ) {
+		document.getElementById("divFormPhoto").style.display = "block";
+	}
+	if (document.getElementsByName("formPhoto")[0].id.value != document.getElementsByName("formPhoto")[0].idNew.value) {
+		new Effect.Opacity("img" + document.getElementsByName("formPhoto")[0].idNew.value, {
+			from: 1.0,
+			to: 0.5,
+			duration: 0.5
+		});
+		if (document.getElementsByName("formPhoto")[0].id.value != "") {
+			new Effect.Opacity("img" + document.getElementsByName("formPhoto")[0].id.value, {
+				from: 0.5,
+				to: 1.0,
+				duration: 0.5
+			});
+		}
+	} 
+  }
+ function FindPos(AObject){
+    var posX = 0, posY = 0;
+	
+    do{
+        posX += AObject.offsetLeft;
+        posY += AObject.offsetTop;
+        AObject = AObject.offsetParent;
+    }
+
+    while( AObject != null );
+    var pos = [];
+    pos['X'] = posX;
+    pos['Y'] = posY;
+
+    return pos;
+}
+
+
+function ajaxLoader(nomDiv){
+	divAjaxLoader = document.getElementById("ajaxLoader");
+	if(divAjaxLoader.style.display == "none"){
+		div = document.getElementById(nomDiv);
+		
+		divAjaxLoader.style.zIndex = 1;
+		divAjaxLoader.style.top = FindPos(div)['Y']+"px";
+		divAjaxLoader.style.left = FindPos(div)['X']+"px";
+		divAjaxLoader.style.width = div.offsetWidth+"px";
+		divAjaxLoader.style.height= div.offsetHeight+"px";
+		divAjaxLoader.style.display = "block";
+		divAjaxLoader.vAlign = "middle"
+	} else {
+		/*divAjaxLoader.style.top = "0px";
+		divAjaxLoader.style.left = "0px";
+		divAjaxLoader.style.width = "0px";
+		divAjaxLoader.style.height= "0px";*/
+		divAjaxLoader.style.zIndex = -1;
+		divAjaxLoader.style.display = "none";
+	}
+}
+</script>
+<div id="ajaxLoader" style="position:absolute; display:none; background-color:black; opacity:0.3; filter:alpha(opacity=30);text-align:center;""><img src="../../../images/ajax-loader.gif"></div>
+<div style="margin: 0px 10px;">
+	<div>
+		<form>
+  		<div style="display: inline; border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 2px;">
+  			<span id="spanButtonPlaceholder"></span>
+  		</div>
+		</form>
+	</div>
+	<div id="divFileProgressContainer" style="height: 75px;"></div>
+</div>
+	
+<div id="divPhoto">
+	<div id="thumbnails">
+		<% for photo in @album.photos %>
+			<img id="img208" src="/photos/0000/0208/<%= photo.filename %>" onClick="changePhoto('/photos/0000/0208/<%= photo.filename %>')"/>
+		<% end %>
+	</div>
+	<div id="divFormPhoto" style="display:none;">
+		<form name="formPhoto" id="formPhoto">
+			<%= hidden_field_tag "idNew" %>
+			<%= hidden_field "photo", "id", :id => 'id' %>
+			<table>
+				<tr>
+					<td>Titre : </td>
+					<td><%= text_field "photo", "titre"  %></td>
+				</tr>
+				<tr>
+					<td colspan="2"><%= text_area "photo", "description" %><td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</div>
+
+<%= observe_field 'idNew', 
+	:frequency => 2,
+	:on => 'change',
+	:url => {:controller => :photos, :action => :changePhoto},
+	:with => "Form.serialize('formPhoto')",
+	:before => "ajaxLoader('divPhoto')",
+	:complete => "ajaxLoader('divPhoto');tinyMCE.execCommand('mceAddEditor', true, 'photo_description');",
+	:update =>  'divFormPhoto' 
+%>

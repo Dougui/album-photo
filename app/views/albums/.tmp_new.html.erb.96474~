@@ -1,0 +1,14 @@
+<form>
+	<table>
+		<tr>
+			<td>Titre : </td>
+			<td><%= text_field "album", "titre"%></td>
+		</tr>
+		<tr>
+			<td colSpan=2><%= text_area "album", "description"%><td>
+		</tr>
+		<tr>
+			<td colSpan=2><%= submit_tag "Valider"%><td>
+		</tr>
+	</table>
+</form>

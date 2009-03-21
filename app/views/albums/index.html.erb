@@ -1,0 +1,40 @@
+<%= form_tag :action => :index %>
+	<table class="affich">
+		<tr>
+			<td>
+				Rechercher : 
+				<%= text_field "recherche", "album", :size => 30 %>
+			</td>
+			<td>
+				<%= collection_select "recherche" , "categorie_id", Categorie.find(:all), :id, :titre, { :include_blank => true } %>
+			</td>
+			<td>
+				<%= submit_tag "OK" %>
+			</td>
+		</tr>
+	</table>
+</form>
+<br/>
+<% @albums.each do |album| %>
+	<table class="affich">
+		<tr>
+			<td rowspan="2" width="100">	
+				<% if album.photos.length != 0 %>
+					<img src="<%= album.photos[rand(album.photos.length)].public_filename(:thumb) %>"/>
+				<% else %>
+					<img src="images/no-pict.jpg"/>
+				<% end %>
+			</td>
+			<th>
+				<%= titre(link_to(album.titre, {:action => :show, :id => album.id}),album)%>
+			</td>
+		</tr>
+		<tr>
+			<td><%= album.description %></td>
+		</tr>
+	</table>
+	<br>
+<% end %>
+<%= link_to 'Ajouter un album', {:action => :new} %>
+<br><br>
+<%= will_paginate @albums %>

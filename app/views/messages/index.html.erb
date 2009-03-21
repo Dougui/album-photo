@@ -1,0 +1,16 @@
+<% @messages.each do |message| %>
+	<table  class="affich">
+		<tr>
+			<th>
+				<%= link_to(message.titre, {:action => :show, :id => message.id, :mode => @mode})%>
+				| <%= link_to("Supprimer",{:action => :delete, :id => message.id, :mode => @mode})%>
+				<% if message.etat == 0 %>
+					 | (Non lu)
+				<%end %>
+			</td>
+		</tr>
+	</table>
+	<br>
+<% end %>
+<br><br>
+<%= will_paginate @messages %>

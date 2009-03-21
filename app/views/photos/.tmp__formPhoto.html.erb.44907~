@@ -1,0 +1,29 @@
+<!--%= form_remote_tag :html => {:name => "formPhoto", :id => "formPhoto"} %-->
+<form name="formPhoto" id="formPhoto">
+	<%= hidden_field_tag "idNew" %>
+	<%= hidden_field "photo", "id", :id => 'id', :value => @photoNew.id %>
+	<table>
+		<tr>
+			<td>Titre : </td>
+			<td><%= text_field "photo", "titre", :value => @photoNew.titre  %></td>
+		</tr>
+		<tr>
+			<td colspan="2"><%= text_area "photo", "description", :value => @photoNew.description  %><td>
+		</tr>
+	</table>
+	<%= observe_field 'idNew', 
+		:frequency => 2,
+		:on => 'change',
+		:url => {:action => :changePhoto},
+		:with => "Form.serialize('formPhoto')",
+		:before => "",
+		:success => "document.formPhoto.id.value = document.formPhoto.idNew.value;tinyMCE.execCommand('mceAddEditor', true, 'photo_description');",
+		:complete => "tinyMCE.execCommand('mceAddEditor', true, 'photo_description');",
+		:update =>  'divFormPhoto' 
+	%>
+</form>
+<input type="button" onclick="alert(document.getElementById('photo_description_ifr').id);">
+<script>
+	
+
+</script>

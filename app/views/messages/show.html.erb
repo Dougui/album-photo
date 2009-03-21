@@ -1,0 +1,22 @@
+<table  class="affich">
+	<tr>
+		<th>
+			<%= @message.titre %>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<% if(params[:mode] == "emis")%>
+				Destinataire : <%= link_to Compte.find(@message.compte_recepteur).pseudo, {:controller =>:comptes, :action => :show, :id => @message.compte_recepteur}  %>
+			<% elsif(params[:mode] == "reçus") %>
+				Emmeteur : <%= link_to Compte.find(@message.compte_emetteur).pseudo, {:controller =>:comptes, :action => :show, :id => @message.compte_emetteur}  %>
+			<%	end %>
+		</td>
+	</tr>
+	<tr>
+		<td><%= @message.corps %></td>
+	</tr>
+</table>
+<% if(session[:compte])%>
+	<%= link_to "Repondre", {:controller => :messages, :action => :new, :id => @message.compte_emetteur}%>
+<% end %>

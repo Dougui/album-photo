@@ -1,0 +1,14 @@
+<h1>Listing albums</h1>
+<table>
+	<% @albums.each do |album| %>
+	 <tr>
+	 	<td><%= link_to album.titre, album_path(album) %> | <%= link_to "Modifier", edit_album_path(album) %> | <%= link_to 'Supprimer', "aaaa" %></td>
+	 </tr>
+	 <tr>
+	 	<td><%= link_to album.description, album_path(album) %></td>
+	 </tr>
+	    
+	<% end %>
+</table>
+<%= link_to 'Nouvelle album', new_album_path %>
+<!--%= link_to 'Supprimer', album, :confirm => 'Etes vous sur?', :method => :delete %-->

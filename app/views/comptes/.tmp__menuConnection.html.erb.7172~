@@ -1,0 +1,24 @@
+<% if session[:compte] %>
+	<br>
+	Bienvenue <%= session[:compte].pseudo %><br><br>
+	<%= 
+		link_to_remote('Deconnection', :url => {:controller=>:comptes, :action => :deconnection})
+	%>
+<% else %>
+	<%= form_remote_tag(:url => {:controller=>:comptes, :action => :connection}) %>
+		<table>
+			<tr>
+				<th>Pseudo : </td><td><%= text_field("compte", "pseudo", :size=>10)  %></td>
+			</tr>
+			<tr>
+				<th><nobr>Mot de passe : </nobr></td><td><%= password_field("compte", "mdp", :size => 10) %></td>
+			</tr>
+			<tr>
+				<td align="right" colspan="2"><input type="submit" value="Valider"></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center"><%= link_to("S'inscrire", {:controller => :compte, :action => :new}) %></td>
+			</tr>
+		</table>
+	</form>
+<% end %>

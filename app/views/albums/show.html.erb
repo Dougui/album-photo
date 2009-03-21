@@ -1,0 +1,35 @@
+<script>
+	function affichImage(src){
+		document.getElementById("divPhoto").innerHTML = "";
+		img = document.createElement("img");
+		img.src = src;
+		img.onclick = function(){
+			Effect.Puff("divPhoto");
+			document.getElementById("divPhoto").style.display = "none"
+			
+		}
+		document.getElementById("divPhoto").appendChild(img);
+		Effect.Grow('divPhoto');
+	}
+</script>
+<%= @album.description %>
+
+<table class="affich">
+	<% i = 0 %>
+	<% for photo in @album.photos %>
+		<% if i%5 == 0 %>
+			<tr>
+		<% end %>
+			<td>
+				<a href="<%= photo.public_filename %>" rel="lightbox[photos]" title="<%= photo.description %>">
+					<%= image_tag photo.public_filename(:thumb) %>
+				</a>
+			</td>
+		<% if i%5 == 4 %>
+			</tr>
+		<% end %>
+		<% i+=1%>
+	<% end %>
+</table>
+
+<%= commentaire(@album,"album")%>

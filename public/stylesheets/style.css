@@ -1,0 +1,232 @@
+body {
+    font-family: Helvetica, Tahoma, Arial, Verdana, sans-serif;
+    font-size: 12px;
+	color: #000000;
+	background: black url(/images/fond.jpg) repeat-x;
+	text-align: center;
+    margin: 0 auto 0;
+	position: relative;
+}
+
+div#site {
+    text-align: left;
+    background: url(/images/site.png) repeat-y 0 0;
+    width: 885px;
+    margin : auto;
+}
+
+/* Haut de page */
+/* ------------ */
+
+div#header {
+    background: url(/images/header.png) no-repeat 0 0;
+    height : 205px;
+    margin : 0;
+    padding: 0;
+}
+div#titreConnection {
+    position: relative;
+	left: 600px;
+    top: 20px; 
+	background: url(/images/left-top.png) no-repeat;
+	height: 37px;
+	width:211px;
+}
+div#menuConnection {
+    position: relative;
+	left: 600px;
+    top: 20px; 
+    background: url(/images/left-bk.jpg);
+	height: 100px;
+	width:211px;
+}
+div#footerConnection{
+    position: relative;
+	left: 600px;
+    top:20px; 
+	background: url(/images/right-bottom.jpg) no-repeat;
+	height: 15px;
+	width:211px;
+}
+#titreConnection h2 {
+	margin: 0;
+	padding: 11px 22px 0 22px;
+	text-align:left;
+	font-size: 1.2em;
+    color: #ff0000;
+}
+
+ul#navbar li{
+    float: left;
+    width: 135px;
+    margin: 0 14px 0 0;
+    text-align: center;
+    font-size: 9px;
+}
+
+ul#navbar li a, ul#navbar li a:link{
+    font-family: Verdana;
+    font-size: 9px;
+    text-decoration: none;
+    color: #FFF;
+}
+
+ul#navbar li a:hover, ul#navbar li a:active, ul#navbar li a:focus {
+    font-family: Verdana;
+    font-size: 10px;
+    font-weight: bold;
+    color: #CCC;
+}
+
+ul#navbar{
+    list-style: none;
+    text-align: center;
+    padding-left: 100px;
+    padding-top: 27px; 
+    font-size: 10px;
+	margin: 0px;
+}
+
+
+/* Corp */
+/* ---- */
+
+#left {
+    width: 226px;
+	float: left;
+}
+
+.left-bloc {
+	width: 211px;
+	background: #f0f0f0 url(/images/left-bk.jpg) no-repeat bottom;
+	padding: 0 0 25px 0;
+	margin: 0 0 13px 0;
+}
+
+.left-bloc ul { 
+    list-style: none;
+	padding: 0 15px 0 15px;
+	margin: 12px 0 5px 0;
+}
+
+.left-bloc p {
+	padding: 0 15px 0 15px;
+	margin: 0;	
+}
+
+.left-titre {
+	background: #000 url(/images/left-top.png) no-repeat;
+	height: 37px;
+}
+
+.left-titre h3 {
+	margin: 0;
+	padding: 11px 0 0 0;
+	text-align:center;
+	font-size: 1.2em;
+	color: white;
+}
+/* ------------- */
+
+#right {
+    width: 659px;
+	float: left;
+}
+
+.right-bloc {
+	width: 659px;
+	background: url(/images/right-bk.jpg);
+	padding: 0 0 0px 0;
+	margin: 0 0 13px 0;
+}
+
+.right-titre {
+	background: #000 url(/images/right-top.png) no-repeat bottom;
+	height: 36px;
+}
+
+.right-titre h2 {
+	margin: 0;
+	padding: 11px 22px 0 22px;
+	text-align:left;
+	font-size: 1.2em;
+    color: #ff0000;
+}
+
+.right-bottom {
+	background: #000 url(/images/right-bottom.jpg) no-repeat;
+	height: 15px;
+}
+
+.right-marges {
+	padding: 0 22px 12px 22px;
+}
+
+.right-bloc h3 {
+    font-size: 1.2em; 
+    color: #849314;
+    margin: 3px 0 0 0; 
+	padding: 0;
+	padding-bottom: 0.3em; 
+	border-bottom: 1px dashed #C0C0C0;
+}
+
+
+
+/* Bas de page */
+/* ----------- */
+
+div#footer {
+    background:url(/images/footer.png) no-repeat 0 0;
+    height : 101px;
+	clear:both;
+}
+
+div#footer p {
+    text-align: center;
+    font-size: 0.9em;
+    padding-top:40px; 
+    clear:both;
+    color:#666666;
+}
+
+div#footer a {
+    color : #666666;
+    text-decoration:none;
+}
+
+
+
+/* Généralités */
+/* ----------- */
+
+img { border: 0; }
+
+p {
+	margin: 0px;
+	padding: 15px 0 10px 0;
+}
+
+a:visited, a:link {
+    color : #000000;
+    font-family:verdana;
+    font-weight : bold;
+    text-decoration:none;
+}
+
+a:hover , a:active , a:focus {
+    color : #ff0000;
+    font-weight : bold;
+    text-decoration:underline;
+}
+
+table.affich{
+	border : 1px solid #000000;
+	width : 100%;
+}
+
+table.affich th {
+	height: 20px;
+	padding-bottom: 0.3em; 
+	border-bottom: 1px dashed #C0C0C0;
+}

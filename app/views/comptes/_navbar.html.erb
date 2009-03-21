@@ -1,0 +1,5 @@
+<ul id="navbar">
+	<% for categorie in Categorie.find(:all) %>
+		<li><%= link_to categorie.titre, {:controller => :albums, :action => :index, :categorie_id => categorie.id} %></li>
+	<% end%>
+</ul>

@@ -1,0 +1,21 @@
+<h2>Commentaires : </h2>
+<div id="commentaire">
+	<% commentaires = Commentaire.find(:all, :conditions => "objet_type = '"+type+"' and objet_id = "+object.id.to_s)%>
+	<% for i in 0..(commentaires.length-1)%>
+		<%= render(:partial => "commentaires/show", :locals => {:commentaire => commentaires[i],:droits => droits ,:blind => false}) %>
+	<% end %>
+</div>
+<% if droits %>
+	<%= link_to_remote "Supprimer tout",
+	            {
+	                :url=>{:controller => "commentaires", :action=> :delete_all, :objet_id => object, :objet_type => type},
+	                :success => "Effect.BlindUp(document.getElementById('commentaire'),{afterFinish: function() { document.getElementById('comments').innerHTML = ''; document.getElementById('comments').style.display = 'block';}})" 
+				},
+				:href=>(url_for :controller => "commentaires", :action=> :delete_all, :id => object)
+	%>
+<% end %>
+<br/>
+<br/>
+<div id="formCommentaire">
+	<%= render(:partial => "commentaires/new", :locals => {:type_objet => type, :droits => droits}) %>
+</div>

@@ -1,0 +1,27 @@
+<%= form_tag :action => :create %>
+	<table class="affich">
+		<tr>
+			<td>Titre : </td>
+			<td><%= text_field "new", "titre"%></td>
+		</tr>
+		<tr>
+			<td colspan="2">Description : </td>
+		</tr>	
+		<tr>
+			<td colSpan=2><%= text_area "new", "description"%><td>
+		</tr>
+		<tr>
+			<td colspan="2">Corps : </td>
+		</tr>	
+		<tr>
+			<td colSpan=2><%= text_area "new", "corps"%><td>
+		</tr>
+		<tr>
+			<td colSpan=2><%= submit_tag "Valider"%><td>
+		</tr>	
+	</table>
+</form>
+<script>
+	tinyMCE.execCommand('mceAddEditor', true, 'new_description');
+	tinyMCE.execCommand('mceAddEditor', true, 'new_corps');
+</script>

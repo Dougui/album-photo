@@ -1,0 +1,31 @@
+<form name="formPhoto" id="formPhoto"></form>
+<%= form_remote_tag( :update => "divFormPhoto",:url => {:controller => :photos, :action => :update}, :html => {:id => "formPhoto", :name => "formPhoto"}) %>
+	
+	<%= hidden_field_tag "idNew" %>
+	<%= hidden_field "photo", "id", :id => 'id', :value => @photoNew.id %>
+	<table>
+		<tr>
+			<td>Titre : </td>
+			<td>
+				<%= text_field "photo", "titre", :value => @photoNew.titre  %>
+				<%= button_to_remote 'Supprimer', 
+					:url => {:controller => :photos, :action => :destroy,  :id => @photoNew.id }, :method => :delete,
+					:complete => 'Effect.Shrink("img'+@photoNew.id.to_s+'");document.formPhoto.photo_id.value = ""; document.formPhoto.photo_titre.value = ""; document.formPhoto.photo_description.value = ""; '
+				%>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2"><%= text_area "photo", "description", :value => @photoNew.description  %><td>
+		</tr>
+	</table>
+	<%= observe_field 'idNew', 
+		:frequency => 1,
+		:on => 'change',
+		:url => {:controller => :photos, :action => :changePhoto},
+		:with => "Form.serialize('formPhoto')",
+		:before => "document.formPhoto.photo_description.value = tinyMCE.get('photo_description').getContent()",
+		:success => "document.formPhoto.id.value = document.formPhoto.idNew.value;",
+		:complete => "tinyMCE.execCommand('mceAddEditor', true, 'photo_description');tinyMCE.get('photo_description').setProgressState(1);ajaxLoader('divPhoto');",
+		:update =>  'divFormPhoto' 
+	%>
+</form>

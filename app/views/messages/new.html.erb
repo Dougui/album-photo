@@ -1,0 +1,21 @@
+<%= form_tag :action => :create %>
+	<%= hidden_field "message", "compte_recepteur", :value => params[:id]%>
+	<table class="affich">
+		<tr>
+			<td>Titre : </td>
+			<td><%= text_field "message", "titre"%></td>
+		</tr>
+		<tr>
+			<td colspan="2">Corps : </td>
+		</tr>	
+		<tr>
+			<td colSpan=2><%= text_area "message", "corps"%><td>
+		</tr>
+		<tr>
+			<td colSpan=2><%= submit_tag "Valider"%><td>
+		</tr>	
+	</table>
+</form>
+<script>
+	tinyMCE.execCommand('mceAddEditor', true, 'message_corps');
+</script>

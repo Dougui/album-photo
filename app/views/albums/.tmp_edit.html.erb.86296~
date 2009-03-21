@@ -1,0 +1,32 @@
+<%= form_tag({:controller => :albums, :action => :update}, :id => "formAlbum",:name => "formAlbum") %>
+	<%= hidden_field "album", "id", :value => @album.id %>
+	<table>
+		<tr>
+			<td>Titre : </td>
+			<td><%= text_field "album", "titre", :value => @album.titre %></td>
+		</tr>
+		<% if error_message_on "album", "titre", :value => @album.titre %>
+			<tr>
+				<td colspan="2" class="tdErreur"><%= error_message_on "album", "titre" %></td>
+			</tr>
+		<% end %>
+		<tr>
+			<td colSpan=2><%= text_area "album", "description", :value => @album.description %><td>
+		</tr>
+		<tr>
+			<td colSpan=2><%= render :partial => 'photos/new' %><td>
+		</tr>
+		<tr>
+			<td colSpan=2>
+				<%= button_to_remote("Valider",
+						:url => {:controller => :photos, :action => :update_photo},
+						:with => "Form.serialize('formPhoto')",
+						:complete => "document.formAlbum.submit()")
+				%>
+			<td>
+		</tr>
+	</table>
+</form>
+<script>
+	tinyMCE.execCommand('mceAddEditor', true, 'album_description');
+</script>

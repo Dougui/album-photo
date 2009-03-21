@@ -1,0 +1,28 @@
+<p>
+  <b>Titre:</b>
+  <%=h @groupe.titre %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @groupe.description %>
+</p>
+
+<p>
+  <b>Public:</b>
+  <%=h @groupe.public %>
+</p>
+
+<p>
+  <b>Avatar:</b>
+  <%=h @groupe.avatar %>
+</p>
+
+<p>
+  <b>Compte:</b>
+  <%=h @groupe.compte_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_groupe_path(@groupe) %> |
+<%= link_to 'Back', groupes_path %>
